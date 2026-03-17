@@ -8,13 +8,26 @@
 <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Syne:wght@400;700;800&display=swap" rel="stylesheet">
 <style>
 *,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}
-:root{--bg:#010308;--bg2:#03060f;--accent:#00f5ff;--accent2:#7b2fff;--accent3:#ff2d78;--text:#eef0fa;--body:#b0b8d8;--muted:#7a85b0;--grid:rgba(0,245,255,0.03);}
+:root{
+  --bg:#010308;--bg2:#03060f;
+  --accent:#00f5ff;--accent2:#7b2fff;--accent3:#ff2d78;
+  --text:#eef0fa;--body:#b0b8d8;--muted:#7a85b0;
+}
 html{scroll-behavior:smooth;}
-body{background:var(--bg);color:var(--text);font-family:'Syne',sans-serif;overflow-x:hidden;cursor:none;}
+body{background:transparent;color:var(--text);font-family:'Syne',sans-serif;overflow-x:hidden;cursor:none;}
 
-.cat-cursor{position:fixed;pointer-events:none;z-index:9999;transform:translate(-50%,-60%);font-size:24px;filter:drop-shadow(0 0 8px var(--accent));animation:catBob 0.6s ease-in-out infinite alternate;}
-.cat-trail{position:fixed;pointer-events:none;z-index:9997;border-radius:50%;background:var(--accent);transform:translate(-50%,-50%);}
-@keyframes catBob{from{transform:translate(-50%,-60%) rotate(-5deg);}to{transform:translate(-50%,-60%) rotate(5deg);}}
+/* ── BACKGROUND — replace src with your file ── */
+#bg{
+  position:fixed;inset:0;z-index:0;
+  background-image:url(backnath.mp4); /* 👈 change this */
+  background-size:cover;
+  background-position:center;
+  background-repeat:no-repeat;
+  pointer-events:none;
+}
+
+.cat-cursor{position:fixed;pointer-events:none;z-index:9999;transform:translate(-50%,-60%);font-size:22px;will-change:transform;}
+.cat-trail{position:fixed;pointer-events:none;z-index:9997;border-radius:50%;background:var(--accent);transform:translate(-50%,-50%);will-change:transform;}
 
 #loader{position:fixed;inset:0;background:var(--bg);z-index:99999;display:flex;flex-direction:column;align-items:center;justify-content:center;transition:opacity 0.8s,visibility 0.8s;}
 #loader.hidden{opacity:0;visibility:hidden;pointer-events:none;}
@@ -25,15 +38,7 @@ body{background:var(--bg);color:var(--text);font-family:'Syne',sans-serif;overfl
 @keyframes loadFill{0%{width:0%;}100%{width:100%;}}
 .loader-pct{font-family:'Share Tech Mono',monospace;font-size:11px;color:var(--muted);margin-top:12px;letter-spacing:2px;}
 
-#bgCanvas{position:fixed;inset:0;z-index:0;opacity:0.6;}
-.grid-bg{position:fixed;inset:0;background-image:linear-gradient(var(--grid) 1px,transparent 1px),linear-gradient(90deg,var(--grid) 1px,transparent 1px);background-size:60px 60px;pointer-events:none;z-index:1;}
-.particles{position:fixed;inset:0;pointer-events:none;z-index:2;overflow:hidden;}
-.particle{position:absolute;border-radius:50%;animation:floatUp linear infinite;opacity:0;}
-@keyframes floatUp{0%{transform:translateY(100vh);opacity:0;}10%{opacity:1;}90%{opacity:0.4;}100%{transform:translateY(-100px) translateX(var(--dx));opacity:0;}}
-body::after{content:'';position:fixed;inset:0;background:repeating-linear-gradient(0deg,transparent,transparent 3px,rgba(0,0,0,0.05) 3px,rgba(0,0,0,0.05) 4px);pointer-events:none;z-index:1000;}
-body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellipse at center,transparent 40%,rgba(0,0,0,0.75) 100%);pointer-events:none;z-index:2;}
-
-nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;justify-content:space-between;align-items:center;padding:20px 60px;border-bottom:1px solid rgba(0,245,255,0.07);background:rgba(1,3,8,0.92);backdrop-filter:blur(20px);}
+nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;justify-content:space-between;align-items:center;padding:20px 60px;border-bottom:1px solid rgba(0,245,255,0.07);background:rgba(1,3,8,0.95);}
 .nav-logo{font-family:'Share Tech Mono',monospace;font-size:13px;color:var(--accent);letter-spacing:3px;text-transform:uppercase;}
 .nav-logo .cat-emoji{display:inline-block;animation:navCat 1s ease-in-out infinite alternate;}
 @keyframes navCat{from{transform:rotate(-10deg);}to{transform:rotate(10deg);}}
@@ -46,31 +51,18 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;justify-content
 
 section{position:relative;z-index:3;}
 
-/* HERO */
 #hero{min-height:100vh;display:flex;align-items:center;padding:120px 60px 80px;position:relative;}
 .hero-inner{max-width:1000px;}
 .hero-tag{font-family:'Share Tech Mono',monospace;font-size:12px;color:var(--accent);letter-spacing:4px;text-transform:uppercase;margin-bottom:32px;opacity:0;animation:fadeUp 0.8s 0.2s forwards;display:flex;align-items:center;gap:12px;}
 .hero-tag::before{content:'';display:inline-block;width:40px;height:1px;background:var(--accent);}
-
 .hero-name{font-weight:800;line-height:1;letter-spacing:-2px;margin-bottom:32px;opacity:0;animation:fadeUp 0.8s 0.4s forwards;}
 .hero-name .line1{display:block;color:var(--text);font-size:clamp(40px,7vw,90px);}
-
-/* GLOWING SURNAME */
 .hero-name .line2{
-  display:block;
-  font-size:clamp(40px,7vw,90px);
-  background:linear-gradient(135deg,#00f5ff,#7b2fff,#000000,#9c031d);
-  background-size:300%;
-  -webkit-background-clip:text;
-  -webkit-text-fill-color:transparent;
-  background-clip:text;
+  display:block;font-size:clamp(40px,7vw,90px);
+  background:linear-gradient(135deg,#167579,#7b2fff,#2a0a2a,#9c031d);
+  background-size:300%;-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
   animation:gradShift 10s ease infinite;
-  filter:drop-shadow(0 0 0px rgba(0,245,255,0.6)) drop-shadow(0 0 40px rgba(123,47,255,0.4)) drop-shadow(0 0 80px rgba(0,245,255,0.2));
-  position:relative;
 }
-/* Extra glow layer */
-
-
 @keyframes gradShift{0%{background-position:0%}50%{background-position:100%}100%{background-position:0%}}
 
 .hero-desc{font-size:17px;color:var(--body);line-height:1.8;max-width:520px;margin-bottom:48px;opacity:0;animation:fadeUp 0.8s 0.6s forwards;}
@@ -95,17 +87,30 @@ section{position:relative;z-index:3;}
 .about-text{color:var(--body);font-size:15px;line-height:1.9;margin-bottom:16px;}
 .about-text span{color:var(--text);font-weight:700;}
 .about-stats{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:40px;}
-.stat-box{border:1px solid rgba(0,245,255,0.1);padding:24px;background:rgba(0,245,255,0.02);transition:all 0.4s;position:relative;overflow:hidden;}
+.stat-box{border:1px solid rgba(0,245,255,0.1);padding:24px;background:rgba(0,245,255,0.02);transition:border-color 0.3s,background 0.3s;position:relative;overflow:hidden;}
 .stat-box::before{content:'';position:absolute;bottom:0;left:0;width:100%;height:1px;background:linear-gradient(90deg,var(--accent),var(--accent2));transform:scaleX(0);transition:transform 0.4s;}
 .stat-box:hover{border-color:rgba(0,245,255,0.25);background:rgba(0,245,255,0.05);}
 .stat-box:hover::before{transform:scaleX(1);}
 .stat-num{font-size:38px;font-weight:800;background:linear-gradient(135deg,var(--accent),var(--accent2));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;line-height:1;margin-bottom:8px;}
 .stat-label{font-family:'Share Tech Mono',monospace;font-size:10px;color:var(--body);letter-spacing:2px;text-transform:uppercase;}
 
+.profile-highlight{position:relative;width:280px;margin:0 auto 40px;display:flex;justify-content:center;align-items:center;}
+.profile-highlight img{
+  width:260px;height:260px;border-radius:50%;object-fit:cover;
+  border:3px solid transparent;
+  background:linear-gradient(var(--bg),var(--bg)) padding-box,linear-gradient(135deg,var(--accent),var(--accent2),var(--accent3)) border-box;
+  box-shadow:0 0 30px rgba(0,245,255,0.3),0 0 60px rgba(123,47,255,0.15);
+  transition:transform 0.4s,box-shadow 0.4s;
+}
+.profile-highlight img:hover{transform:scale(1.05);box-shadow:0 0 40px rgba(0,245,255,0.5),0 0 80px rgba(123,47,255,0.25);}
+.photo-ring{position:absolute;width:284px;height:284px;border-radius:50%;border:1px solid transparent;border-top-color:var(--accent);border-right-color:var(--accent2);animation:spinRing 6s linear infinite;opacity:0.7;}
+.photo-ring-2{position:absolute;width:296px;height:296px;border-radius:50%;border:1px solid transparent;border-bottom-color:var(--accent3);border-left-color:var(--accent2);animation:spinRing 10s linear infinite reverse;opacity:0.4;}
+@keyframes spinRing{from{transform:rotate(0deg);}to{transform:rotate(360deg);}}
+
 #skills{padding:120px 60px;border-top:1px solid rgba(255,255,255,0.05);}
 .skills-header{margin-bottom:60px;}
 .skills-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:2px;}
-.skill-card{background:var(--bg2);padding:36px;border:1px solid rgba(255,255,255,0.06);transition:all 0.4s;position:relative;overflow:hidden;}
+.skill-card{background:var(--bg2);padding:36px;border:1px solid rgba(255,255,255,0.06);transition:background 0.3s,transform 0.3s;position:relative;overflow:hidden;}
 .skill-card::before{content:'';position:absolute;top:0;left:0;width:100%;height:2px;background:linear-gradient(90deg,var(--accent),var(--accent2),var(--accent3));transform:scaleX(0);transform-origin:left;transition:transform 0.5s;}
 .skill-card:hover::before{transform:scaleX(1);}
 .skill-card:hover{background:rgba(0,245,255,0.03);transform:translateY(-4px);}
@@ -115,7 +120,7 @@ section{position:relative;z-index:3;}
 
 #projects{padding:120px 60px;border-top:1px solid rgba(255,255,255,0.05);}
 .projects-header{margin-bottom:60px;}
-.project-card{border:1px solid rgba(255,255,255,0.07);padding:48px;background:var(--bg2);position:relative;overflow:hidden;transition:all 0.4s;margin-bottom:2px;}
+.project-card{border:1px solid rgba(255,255,255,0.07);padding:48px;background:var(--bg2);position:relative;overflow:hidden;transition:border-color 0.3s,transform 0.3s;margin-bottom:2px;}
 .project-card::after{content:'';position:absolute;inset:0;background:linear-gradient(135deg,rgba(0,245,255,0.03),rgba(123,47,255,0.03));opacity:0;transition:opacity 0.4s;}
 .project-card:hover::after{opacity:1;}
 .project-card:hover{border-color:rgba(0,245,255,0.2);transform:translateX(6px);}
@@ -141,8 +146,7 @@ footer{padding:36px 60px;border-top:1px solid rgba(255,255,255,0.05);display:fle
 .reveal{opacity:0;transform:translateY(40px);transition:opacity 0.9s,transform 0.9s;}
 .reveal.visible{opacity:1;transform:translateY(0);}
 
-/* SPOTIFY */
-#spotify{position:fixed;bottom:24px;right:24px;z-index:500;width:300px;background:rgba(5,8,16,0.97);border:1px solid rgba(0,245,255,0.15);backdrop-filter:blur(20px);border-radius:14px;overflow:hidden;box-shadow:0 20px 60px rgba(0,0,0,0.7);transition:transform 0.4s cubic-bezier(.4,0,.2,1);}
+#spotify{position:fixed;bottom:24px;right:24px;z-index:500;width:300px;background:rgba(5,8,18,0.98);border:1px solid rgba(0,245,255,0.15);border-radius:14px;overflow:hidden;box-shadow:0 20px 60px rgba(0,0,0,0.7);transition:transform 0.4s cubic-bezier(.4,0,.2,1);}
 #spotify.minimized{transform:translateY(calc(100% - 50px));}
 .sp-header{display:flex;align-items:center;justify-content:space-between;padding:14px 16px;cursor:none;border-bottom:1px solid rgba(0,245,255,0.06);}
 .sp-brand{display:flex;align-items:center;gap:8px;}
@@ -160,7 +164,6 @@ footer{padding:36px 60px;border-top:1px solid rgba(255,255,255,0.05);display:fle
 .sp-embed.active{display:block;}
 .sp-embed iframe{width:100%;border:none;display:block;}
 
-/* SNAKE */
 #eggOverlay{position:fixed;inset:0;background:rgba(1,3,8,0.97);z-index:9990;display:none;align-items:center;justify-content:center;flex-direction:column;}
 #eggOverlay.show{display:flex;}
 .egg-title{font-family:'Share Tech Mono',monospace;font-size:13px;color:var(--accent);letter-spacing:4px;text-transform:uppercase;margin-bottom:8px;}
@@ -171,59 +174,31 @@ footer{padding:36px 60px;border-top:1px solid rgba(255,255,255,0.05);display:fle
 .egg-close{margin-top:16px;font-family:'Share Tech Mono',monospace;font-size:10px;color:var(--body);letter-spacing:2px;text-transform:uppercase;background:none;border:1px solid rgba(122,133,176,0.2);padding:8px 20px;cursor:none;transition:all 0.2s;}
 .egg-close:hover{border-color:var(--accent);color:var(--accent);}
 
-.profile-highlight{
-  position:relative;
-  width:280px;
-  margin:auto;
-  display:flex;
-  justify-content:center;
-  align-items:center;
+@media(max-width:768px){
+  nav{padding:18px 20px;}.nav-links{display:none;}
+  #hero{padding:100px 20px 60px;}
+  #about{grid-template-columns:1fr;padding:60px 20px;gap:40px;}
+  #skills,#projects,#contact{padding:60px 20px;}
+  footer{padding:24px 20px;flex-direction:column;gap:10px;text-align:center;}
+  #spotify{width:260px;right:12px;bottom:12px;}
+  .scroll-hint{left:20px;}
 }
-
-.profile-highlight img{
-  width:260px;
-  height:260px;
-  border-radius:50%;
-  object-fit:cover;
-  border:3px solid var(--accent);
-  box-shadow:
-    0 0 25px rgba(0,245,255,0.8),
-    0 0 60px rgba(123,47,255,0.4),
-    0 0 120px rgba(0,245,255,0.2);
-  transition:transform 0.4s;
-  position:relative;
-  z-index:2;
-}
-
-.profile-highlight img:hover{
-  transform:scale(1.07);
-}
-
-.photo-ring{
-  position:absolute;
-  width:300px;
-  height:300px;
-  border-radius:50%;
-  background:conic-gradient(
-    var(--accent),
-    var(--accent2),
-    var(--accent3),
-    var(--accent)
-  );
-  animation:spinRing 6s linear infinite;
-  filter:blur(10px);
-  opacity:0.6;
-}
-
-@keyframes spinRing{
-  from{transform:rotate(0deg);}
-  to{transform:rotate(360deg);}
-}
-
-@media(max-width:768px){nav{padding:18px 20px;}.nav-links{display:none;}#hero{padding:100px 20px 60px;}#about{grid-template-columns:1fr;padding:60px 20px;gap:40px;}#skills,#projects,#contact{padding:60px 20px;}footer{padding:24px 20px;flex-direction:column;gap:10px;text-align:center;}#spotify{width:260px;right:12px;bottom:12px;}.scroll-hint{left:20px;}}
 </style>
 </head>
 <body>
+
+<!-- ============================================
+     BACKGROUND — swap the filename below
+     Supported: image  → url('bg.jpg')
+                video  → uncomment the <video> block
+                gif    → url('bg.gif')
+     ============================================ -->
+<div id="bg"></div>
+<!-- If you want a VIDEO background instead, delete the <div id="bg"> above and use this:
+<video id="bg" autoplay muted loop playsinline>
+  <source src="YOUR_VIDEO_FILE_HERE.mp4" type="video/mp4">
+</video>
+-->
 
 <div id="loader">
   <div class="loader-name">unlocking my potential...</div>
@@ -235,12 +210,7 @@ footer{padding:36px 60px;border-top:1px solid rgba(255,255,255,0.05);display:fle
 <div class="cat-trail" id="trail1"></div>
 <div class="cat-trail" id="trail2"></div>
 <div class="cat-trail" id="trail3"></div>
-<canvas id="bgCanvas"></canvas>
-<div class="grid-bg"></div>
-<div class="particles" id="particles"></div>
-<div id="pawContainer"></div>
 
-<!-- SPOTIFY -->
 <div id="spotify" class="minimized">
   <div class="sp-header" id="spHeader">
     <div class="sp-brand"><div class="sp-dot"></div><div class="sp-title">Now Playing</div></div>
@@ -258,7 +228,6 @@ footer{padding:36px 60px;border-top:1px solid rgba(255,255,255,0.05);display:fle
   </div>
 </div>
 
-<!-- EASTER EGG -->
 <div id="eggOverlay">
   <div class="egg-title">// Secret Unlocked</div>
   <div class="egg-sub">Konami code entered — Snake!</div>
@@ -284,7 +253,7 @@ footer{padding:36px 60px;border-top:1px solid rgba(255,255,255,0.05);display:fle
     <div class="hero-tag">BS Computer Engineering · WMSU · Batch 2028</div>
     <h1 class="hero-name">
       <span class="line1">Nathaniel B.</span>
-      <span class="line2" data-text="McClintock">McClintock</span>
+      <span class="line2">McClintock</span>
     </h1>
     <p class="hero-desc">
       First-year <span>Computer Engineering student</span> at <span>Western Mindanao State University</span> — building the foundation of something great, one line of code at a time.
@@ -299,33 +268,23 @@ footer{padding:36px 60px;border-top:1px solid rgba(255,255,255,0.05);display:fle
 
 <section id="about">
   <div class="about-right reveal">
-
-  <div class="profile-highlight">
+    <div class="profile-highlight">
       <div class="photo-ring"></div>
+      <div class="photo-ring-2"></div>
       <img src="photo.jpg" alt="Nathaniel McClintock">
-  </div>
-
-  <div class="about-stats">
-    <div class="stat-box"><div class="stat-num">1st</div><div class="stat-label">Year Student</div></div>
-    <div class="stat-box"><div class="stat-num">BS</div><div class="stat-label">Computer Engineering</div></div>
-    <div class="stat-box"><div class="stat-num">WMSU</div><div class="stat-label">University</div></div>
-    <div class="stat-box"><div class="stat-num">∞</div><div class="stat-label">Projects Ahead</div></div>
-  </div>
-
-</div>
-  <div class="about-left reveal">
-    <div class="section-label">About Me</div>
-    <h2 class="section-title">Engineering<br/>the future.</h2>
-    <p class="about-text">I'm <span>Nathaniel</span>, a first-year BS Computer Engineering student from <span>Western Mindanao State University</span>. Passionate about building things — from Android apps to whatever challenge comes next.</p>
-    <p class="about-text">Currently mastering the fundamentals and working toward my first major projects. Every expert was once a beginner — and I'm just getting started.</p>
-  </div>
-  <div class="about-right reveal">
+    </div>
     <div class="about-stats">
       <div class="stat-box"><div class="stat-num">1st</div><div class="stat-label">Year Student</div></div>
       <div class="stat-box"><div class="stat-num">BS</div><div class="stat-label">Computer Engineering</div></div>
       <div class="stat-box"><div class="stat-num">WMSU</div><div class="stat-label">University</div></div>
       <div class="stat-box"><div class="stat-num">∞</div><div class="stat-label">Projects Ahead</div></div>
     </div>
+  </div>
+  <div class="about-left reveal">
+    <div class="section-label">About Me</div>
+    <h2 class="section-title">Engineering<br/>the future.</h2>
+    <p class="about-text">I'm <span>Nathaniel</span>, a first-year BS Computer Engineering student from <span>Western Mindanao State University</span>. Passionate about building things — from Android apps to whatever challenge comes next.</p>
+    <p class="about-text">Currently mastering the fundamentals and working toward my first major projects. Every expert was once a beginner — and I'm just getting started.</p>
   </div>
 </section>
 
@@ -374,7 +333,7 @@ footer{padding:36px 60px;border-top:1px solid rgba(255,255,255,0.05);display:fle
     <h2 class="contact-title">Let's connect.</h2>
     <p class="contact-sub">Open to collaborations, opportunities & conversations</p>
     <div class="contact-links">
-      <a href="https://www.facebook.com/natalia.mcclintock.94" class="btn-primary">Send Email</a>
+      <a href="https://www.facebook.com/natalia.mcclintock.94" class="btn-primary">Send Message</a>
       <a href="#" class="btn-secondary">GitHub</a>
       <a href="#" class="btn-secondary">LinkedIn</a>
     </div>
@@ -383,78 +342,51 @@ footer{padding:36px 60px;border-top:1px solid rgba(255,255,255,0.05);display:fle
 
 <footer>
   <div class="footer-text">© 2026 <span>Nathaniel B. McClintock</span></div>
-  <div class="footer-cat">💤Nath a, dev💤
-  </div>
+  <div class="footer-cat">💤 Nath a dev 💤</div>
   <div class="footer-text">BS CompE · <span>WMSU</span></div>
 </footer>
 
 <script>
-// LOADER
+// ── LOADER ──
 let pct=0;
 const loaderPct=document.getElementById('loaderPct');
-const li=setInterval(()=>{pct+=Math.random()*15;if(pct>=100){pct=100;clearInterval(li);setTimeout(()=>document.getElementById('loader').classList.add('hidden'),300);}loaderPct.textContent=Math.floor(pct)+'%';},100);
+const li=setInterval(()=>{
+  pct+=Math.random()*15;
+  if(pct>=100){pct=100;clearInterval(li);setTimeout(()=>document.getElementById('loader').classList.add('hidden'),300);}
+  loaderPct.textContent=Math.floor(pct)+'%';
+},100);
 
-// CURSOR
+// ── CURSOR ──
 const cat=document.getElementById('catCursor');
 const trails=[document.getElementById('trail1'),document.getElementById('trail2'),document.getElementById('trail3')];
-let mx=0,my=0;
+let mx=0,my=0,animRunning=false;
 const tp=trails.map(()=>({x:0,y:0}));
-const cats=['🐱','😺','😸','🐾','😻', '💙'];let ci=0;
-document.addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY;cat.style.left=mx+'px';cat.style.top=my+'px';});
+const cats=['🐱','😺','😸','🐾','😻','💙'];let ci=0;
+document.addEventListener('mousemove',e=>{
+  mx=e.clientX;my=e.clientY;
+  cat.style.left=mx+'px';cat.style.top=my+'px';
+  if(!animRunning){animRunning=true;requestAnimationFrame(animTrail);}
+});
 document.addEventListener('click',()=>{
   ci=(ci+1)%cats.length;cat.textContent=cats[ci];
   const p=document.createElement('div');
   p.style.cssText=`position:fixed;left:${mx}px;top:${my}px;font-size:16px;pointer-events:none;z-index:9996;animation:pawClick 0.8s forwards;`;
-  p.textContent='💙🖤';document.body.appendChild(p);setTimeout(()=>p.remove(),800);
+  p.textContent='💙';document.body.appendChild(p);setTimeout(()=>p.remove(),800);
 });
-function animT(){
+function animTrail(){
+  let moved=false;
   tp[0].x+=(mx-tp[0].x)*0.25;tp[0].y+=(my-tp[0].y)*0.25;
   tp[1].x+=(tp[0].x-tp[1].x)*0.3;tp[1].y+=(tp[0].y-tp[1].y)*0.3;
   tp[2].x+=(tp[1].x-tp[2].x)*0.3;tp[2].y+=(tp[1].y-tp[2].y)*0.3;
-  trails.forEach((t,i)=>{t.style.left=tp[i].x+'px';t.style.top=tp[i].y+'px';t.style.opacity=(3-i)*0.15;t.style.width=(8-i*2)+'px';t.style.height=(8-i*2)+'px';});
-  requestAnimationFrame(animT);
+  trails.forEach((t,i)=>{
+    t.style.left=tp[i].x+'px';t.style.top=tp[i].y+'px';
+    t.style.opacity=(3-i)*0.15;t.style.width=(8-i*2)+'px';t.style.height=(8-i*2)+'px';
+    if(Math.abs(tp[i].x-mx)>0.5||Math.abs(tp[i].y-my)>0.5)moved=true;
+  });
+  if(moved){requestAnimationFrame(animTrail);}else{animRunning=false;}
 }
-animT();
 
-// CANVAS BG
-const cv=document.getElementById('bgCanvas');
-const cx=cv.getContext('2d');
-function resize(){cv.width=window.innerWidth;cv.height=window.innerHeight;}
-resize();window.addEventListener('resize',resize);
-const stars=Array.from({length:200},()=>({x:Math.random()*cv.width,y:Math.random()*cv.height,r:Math.random()*1.5,speed:Math.random()*0.3+0.05,op:Math.random()}));
-const nodes=Array.from({length:60},()=>({x:Math.random()*cv.width,y:Math.random()*cv.height,vx:(Math.random()-0.5)*0.4,vy:(Math.random()-0.5)*0.4,r:Math.random()*2+1}));
-const shoots=Array.from({length:5},()=>ns());
-function ns(){return{x:Math.random()*cv.width,y:Math.random()*cv.height*0.5,len:Math.random()*120+60,speed:Math.random()*8+4,angle:Math.PI/4+(Math.random()-0.5)*0.3,life:0,maxLife:Math.random()*60+30,delay:Math.random()*300};}
-let fr=0;
-function drawBg(){
-  cx.clearRect(0,0,cv.width,cv.height);
-  const g=cx.createRadialGradient(cv.width*0.3,cv.height*0.3,0,cv.width*0.5,cv.height*0.5,cv.width);
-  g.addColorStop(0,'rgba(10,5,30,0.95)');g.addColorStop(0.5,'rgba(5,3,15,0.97)');g.addColorStop(1,'rgba(1,3,8,1)');
-  cx.fillStyle=g;cx.fillRect(0,0,cv.width,cv.height);
-  const n1=cx.createRadialGradient(cv.width*0.2,cv.height*0.3,0,cv.width*0.2,cv.height*0.3,300);
-  n1.addColorStop(0,'rgba(123,47,255,0.06)');n1.addColorStop(1,'transparent');cx.fillStyle=n1;cx.fillRect(0,0,cv.width,cv.height);
-  const n2=cx.createRadialGradient(cv.width*0.8,cv.height*0.7,0,cv.width*0.8,cv.height*0.7,250);
-  n2.addColorStop(0,'rgba(0,245,255,0.05)');n2.addColorStop(1,'transparent');cx.fillStyle=n2;cx.fillRect(0,0,cv.width,cv.height);
-  stars.forEach(s=>{s.y-=s.speed;if(s.y<0){s.y=cv.height;s.x=Math.random()*cv.width;}s.op=0.3+0.7*Math.abs(Math.sin(fr*0.02+s.x));cx.beginPath();cx.arc(s.x,s.y,s.r,0,Math.PI*2);cx.fillStyle=`rgba(255,255,255,${s.op*0.6})`;cx.fill();});
-  nodes.forEach(n=>{n.x+=n.vx;n.y+=n.vy;if(n.x<0||n.x>cv.width)n.vx*=-1;if(n.y<0||n.y>cv.height)n.vy*=-1;});
-  nodes.forEach((a,i)=>{nodes.slice(i+1).forEach(b=>{const d=Math.hypot(a.x-b.x,a.y-b.y);if(d<120){cx.beginPath();cx.moveTo(a.x,a.y);cx.lineTo(b.x,b.y);cx.strokeStyle=`rgba(0,245,255,${(1-d/120)*0.08})`;cx.lineWidth=0.5;cx.stroke();}});cx.beginPath();cx.arc(a.x,a.y,a.r,0,Math.PI*2);cx.fillStyle='rgba(0,245,255,0.2)';cx.fill();});
-  shoots.forEach((s,i)=>{if(s.delay>0){s.delay--;return;}s.life++;if(s.life>s.maxLife){shoots[i]=ns();return;}const p=s.life/s.maxLife;const al=p<0.2?p/0.2:1-((p-0.2)/0.8);const ex=s.x+Math.cos(s.angle)*s.speed*s.life;const ey=s.y+Math.sin(s.angle)*s.speed*s.life;const sx=ex-Math.cos(s.angle)*s.len;const sy=ey-Math.sin(s.angle)*s.len;const sg=cx.createLinearGradient(sx,sy,ex,ey);sg.addColorStop(0,'transparent');sg.addColorStop(1,`rgba(255,255,255,${al*0.9})`);cx.beginPath();cx.moveTo(sx,sy);cx.lineTo(ex,ey);cx.strokeStyle=sg;cx.lineWidth=1.5;cx.stroke();});
-  fr++;requestAnimationFrame(drawBg);
-}
-drawBg();
-
-// PARTICLES
-const pc=document.getElementById('particles');
-for(let i=0;i<40;i++){const p=document.createElement('div');p.className='particle';const cols=['#00f5ff','#7b2fff','#ff2d78','white'];p.style.cssText=`left:${Math.random()*100}%;bottom:${Math.random()*20}%;--dx:${(Math.random()-0.5)*200}px;animation-duration:${Math.random()*15+8}s;animation-delay:${Math.random()*10}s;background:${cols[Math.floor(Math.random()*cols.length)]};width:${Math.random()*3+1}px;height:${Math.random()*3+1}px;`;pc.appendChild(p);}
-
-// PAWS
-const pawC=document.getElementById('pawContainer');
-for(let i=0;i<8;i++){const p=document.createElement('div');p.style.cssText=`position:fixed;left:${Math.random()*90+5}%;top:${Math.random()*90+5}%;font-size:${Math.random()*20+12}px;pointer-events:none;z-index:2;--r:${Math.random()*360}deg;animation:pawFloat ${Math.random()*20+15}s linear infinite;animation-delay:${Math.random()*10}s;opacity:0;`;p.textContent='🐾';pawC.appendChild(p);}
-const se=document.createElement('style');
-se.textContent='@keyframes pawClick{0%{transform:translate(-50%,-50%) scale(0);opacity:1;}100%{transform:translate(-50%,-50%) scale(2);opacity:0;}}@keyframes pawFloat{0%{transform:translateY(0) rotate(var(--r));opacity:0;}20%{opacity:0.15;}80%{opacity:0.08;}100%{transform:translateY(-80vh) rotate(var(--r));opacity:0;}}';
-document.head.appendChild(se);
-
-// SPOTIFY TABS
+// ── SPOTIFY TABS ──
 document.querySelectorAll('.sp-tab').forEach(tab=>{
   tab.addEventListener('click',e=>{
     e.stopPropagation();
@@ -464,18 +396,19 @@ document.querySelectorAll('.sp-tab').forEach(tab=>{
     document.querySelectorAll('.sp-embed')[tab.dataset.tab].classList.add('active');
   });
 });
-document.getElementById('spHeader').addEventListener('click',()=>{document.getElementById('spotify').classList.toggle('minimized');});
+document.getElementById('spHeader').addEventListener('click',()=>document.getElementById('spotify').classList.toggle('minimized'));
 
-// KONAMI
+// ── KONAMI ──
 const konami=['ArrowUp','ArrowUp','ArrowDown','ArrowDown','ArrowLeft','ArrowRight','ArrowLeft','ArrowRight','b','a'];
 let ki=0;
 document.addEventListener('keydown',e=>{
   if(e.key===konami[ki]){ki++;if(ki===konami.length){ki=0;openEgg();}}else{ki=0;}
-  if(['ArrowUp','ArrowDown','ArrowLeft','ArrowRight'].includes(e.key)&&document.getElementById('eggOverlay').classList.contains('show')){e.preventDefault();snakeDir=e.key.replace('Arrow','').toLowerCase();}
-  if((e.key==='r'||e.key==='R')&&document.getElementById('eggOverlay').classList.contains('show'))initSnake();
+  const eggOpen=document.getElementById('eggOverlay').classList.contains('show');
+  if(['ArrowUp','ArrowDown','ArrowLeft','ArrowRight'].includes(e.key)&&eggOpen){e.preventDefault();snakeDir=e.key.replace('Arrow','').toLowerCase();}
+  if((e.key==='r'||e.key==='R')&&eggOpen)initSnake();
 });
 
-// SNAKE
+// ── SNAKE ──
 const eggO=document.getElementById('eggOverlay');
 const sC=document.getElementById('snakeCanvas');
 const sX=sC.getContext('2d');
@@ -504,10 +437,16 @@ function openEgg(){initSnake();eggO.classList.add('show');snakeLoop();}
 function snakeLoop(){if(!eggO.classList.contains('show'))return;stepSnake();drawSnake();setTimeout(()=>requestAnimationFrame(snakeLoop),130);}
 document.getElementById('eggClose').addEventListener('click',()=>eggO.classList.remove('show'));
 
-// REVEAL
+// ── REVEAL ON SCROLL ──
 const reveals=document.querySelectorAll('.reveal');
-const obs=new IntersectionObserver(entries=>{entries.forEach((e,i)=>{if(e.isIntersecting)setTimeout(()=>e.target.classList.add('visible'),i*100);});},{threshold:0.1});
+const obs=new IntersectionObserver(entries=>{
+  entries.forEach((e,i)=>{if(e.isIntersecting)setTimeout(()=>e.target.classList.add('visible'),i*80);});
+},{threshold:0.1});
 reveals.forEach(r=>obs.observe(r));
+
+const se=document.createElement('style');
+se.textContent='@keyframes pawClick{0%{transform:translate(-50%,-50%) scale(0);opacity:1;}100%{transform:translate(-50%,-50%) scale(2);opacity:0;}}';
+document.head.appendChild(se);
 </script>
 </body>
 </html>
