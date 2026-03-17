@@ -17,13 +17,17 @@ html{scroll-behavior:smooth;}
 body{background:transparent;color:var(--text);font-family:'Syne',sans-serif;overflow-x:hidden;cursor:none;}
 
 /* ── BACKGROUND — replace src with your file ── */
-#bg{
-  position:fixed;inset:0;z-index:0;
-  background-image:url(backnath.mp4); /* 👈 change this */
-  background-size:cover;
-  background-position:center;
-  background-repeat:no-repeat;
-  pointer-events:none;
+<video id="bg" autoplay muted loop playsinline>
+  <source src="nathback.mp4" type="video/mp4">
+</video>
+  #bg {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  pointer-events: none;
 }
 
 .cat-cursor{position:fixed;pointer-events:none;z-index:9999;transform:translate(-50%,-60%);font-size:22px;will-change:transform;}
